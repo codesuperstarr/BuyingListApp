@@ -1,6 +1,7 @@
 package com.example.buyinglistapp
 
 import android.app.Application
+import com.example.buyinglistapp.data.database.BuyingListDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 

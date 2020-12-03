@@ -1,7 +1,8 @@
-package com.example.buyinglistapp
+package com.example.buyinglistapp.data.database
 
 
 import androidx.room.*
+import com.example.buyinglistapp.data.model.BuyingItems
 import kotlinx.coroutines.flow.Flow
 
 @Dao

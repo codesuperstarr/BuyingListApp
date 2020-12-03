@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment3">
+
+    <fragment
+        android:id="@+id/homeFragment3"
+        android:name="com.example.buyinglistapp.ui.home.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment3_to_addItemFragment2"
+            app:destination="@id/addItemFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/addItemFragment2"
+        android:name="com.example.buyinglistapp.ui.additem.AddItemFragment"
+        android:label="AddItemFragment" />
+</navigation>

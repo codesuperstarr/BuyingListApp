@@ -1,13 +1,13 @@
-package com.example.buyinglistapp
+package com.example.buyinglistapp.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.buyinglistapp.data.model.BuyingItems
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.time.chrono.HijrahChronology.INSTANCE
 
 @Database(entities = arrayOf(BuyingItems::class), version = 1, exportSchema = false)
 abstract class BuyingListDatabase : RoomDatabase() {
@@ -28,13 +28,14 @@ abstract class BuyingListDatabase : RoomDatabase() {
                     buyingListDao.deleteAll()
 
                     // Add sample words.
-                    var word = BuyingItems("Hello")
+                    var word =
+                        BuyingItems("Hello")
                    buyingListDao.insert(word)
                     word = BuyingItems("World!")
                     buyingListDao.insert(word)
 
                     // TODO: Add your own words!
-                    word =BuyingItems("TODO!")
+                    word = BuyingItems("TODO!")
                     buyingListDao.insert(word)
                 }
             }
@@ -51,13 +52,18 @@ abstract class BuyingListDatabase : RoomDatabase() {
         ): BuyingListDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
-            return INSTANCE ?: synchronized(this) {
+            return INSTANCE
+                ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     BuyingListDatabase::class.java,
                     "word_database"
                 )
-                    .addCallback(WordDatabaseCallback(scope))
+                    .addCallback(
+                        WordDatabaseCallback(
+                            scope
+                        )
+                    )
                     .build()
                 INSTANCE = instance
                 // return instance
