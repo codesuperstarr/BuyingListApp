@@ -14,61 +14,25 @@ abstract class BuyingListDatabase : RoomDatabase() {
 
     abstract fun buyingListDao(): BuyingListDao
 
-    private class WordDatabaseCallback(
-        private val scope: CoroutineScope
-    ) : RoomDatabase.Callback() {
 
-        override fun onCreate(db: SupportSQLiteDatabase) {
-            super.onCreate(db)
-            INSTANCE?.let { database ->
-                scope.launch {
-                    var buyingListDao = database.buyingListDao()
+companion object{
 
-                    // Delete all content here.
-                    buyingListDao.deleteAll()
+    @Volatile
+    private var INSTANCE: BuyingListDatabase? = null
 
-                    // Add sample words.
-                    var word =
-                        BuyingItems("Hello")
-                   buyingListDao.insert(word)
-                    word = BuyingItems("World!")
-                    buyingListDao.insert(word)
-
-                    // TODO: Add your own words!
-                    word = BuyingItems("TODO!")
-                    buyingListDao.insert(word)
-                }
-            }
-        }
-    }
-
-    companion object {
-        @Volatile
-        private var INSTANCE: BuyingListDatabase? = null
-
-        fun getDatabase(
-            context: Context,
-            scope: CoroutineScope
-        ): BuyingListDatabase {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
-            return INSTANCE
-                ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    BuyingListDatabase::class.java,
-                    "word_database"
-                )
-                    .addCallback(
-                        WordDatabaseCallback(
-                            scope
-                        )
-                    )
+    fun getInstance(context: Context) : BuyingListDatabase{
+        synchronized(this){
+            var instance = INSTANCE
+            if (instance == null){
+                instance = Room.databaseBuilder(context.applicationContext
+                    ,BuyingListDatabase::class.java,"shopping_items_database")
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
-                // return instance
-                instance
             }
+            return instance
         }
     }
+
+}
 }

@@ -9,6 +9,8 @@ data class BuyingItems(
 
     @ColumnInfo(name = "name")
     val name: String,
+    @ColumnInfo(name = "quantity")
+    val quantity: Int,
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null
 ) {
